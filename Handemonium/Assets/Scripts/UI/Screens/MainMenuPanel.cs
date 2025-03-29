@@ -1,4 +1,4 @@
-using DG.Tweening;
+using RPSLS.Framework;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -36,7 +36,8 @@ namespace RPSLS.UI
 
         public void OnClickPlay()
         {
-            // Launch game
+            TogglePlayButtonInteraction(false);
+            MainMenuController.Instance.OnPlayClicked();
         }
 
         public void OnClickMusicToggle()

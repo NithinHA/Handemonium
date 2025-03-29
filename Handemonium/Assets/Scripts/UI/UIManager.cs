@@ -1,11 +1,10 @@
-using UnityEngine;
 
 namespace RPSLS.UI
 {
     public class UIManager : Singleton<UIManager>
     {
-        [SerializeField] private MainMenuPanel m_MainMenuPanel;
-        [SerializeField] private InGamePanel m_InGamePanel;
+        public MainMenuPanel MainMenuPanel;
+        public InGamePanel InGamePanel;
 
         protected override void Start()
         {

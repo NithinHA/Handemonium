@@ -46,8 +46,7 @@ namespace RPSLS.Framework
             yield return new WaitForSeconds(1);
             ServiceLocator.GetService<ISceneService>().LoadScene(Constants.SceneNames.GAME, () =>
             {
-                Debug.Log("Game Started");
-                // ServiceLocator.GetService<IGameService>().switch
+                ServiceLocator.GetGameManager().SwitchState(GameState.MainMenu);
             });
         }
 

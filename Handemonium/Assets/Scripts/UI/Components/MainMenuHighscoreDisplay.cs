@@ -15,7 +15,7 @@ namespace RPSLS.UI
 
         public void Setup()
         {
-            m_Amount.text = $"{ServiceLocator.GetService<IHighscore>().GetHighscore()}";
+            m_Amount.text = $"{ServiceLocator.GetHighscoreService().GetHighscore()}";
             Utility.ImageFadeEffect(m_BgImage);
             Utility.ImageFadeEffect(m_Divider, onComplete: OnTweenComplete);
         }

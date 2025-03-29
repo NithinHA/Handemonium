@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using RPSLS.Framework.Services;
 using UnityEngine;
 
 namespace RPSLS.Framework
@@ -39,6 +40,11 @@ namespace RPSLS.Framework
 
 #endregion
 
+        public static bool HasService(Type type)
+        {
+            return _services.ContainsKey(type);
+        }
+        
         public static T GetService<T>()
         {
             return (T) GetService(typeof(T));
@@ -55,5 +61,19 @@ namespace RPSLS.Framework
                 return null;
             }
         }
+
+#region Service Has and Get methods
+
+        public static IGameService GetGameManager()
+        {
+            return HasService(typeof(IGameService)) ? GetService<IGameService>() : null;
+        }
+        
+        public static IHighscore GetHighscoreService()
+        {
+            return HasService(typeof(IHighscore)) ? GetService<IHighscore>() : null;
+        }
+
+#endregion
     }
 }
