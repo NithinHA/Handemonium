@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using RPSLS.Framework.Services;
 using UnityEngine;
@@ -6,15 +7,17 @@ using UnityEngine.SceneManagement;
 
 namespace RPSLS.Framework
 {
-    public class Bootstrap : MonoBehaviour
+    public class Bootstrap : Singleton<Bootstrap>
     {
-        private void Awake()
+        protected override void Awake()
         {
-            InitializeAllServices(OnInitialized);
+            base.Awake();
+            InitializeAllServices(() => StartCoroutine(OnInitialized()));
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             ServiceLocator.UnregisterAllServices();
         }
 
@@ -26,7 +29,8 @@ namespace RPSLS.Framework
             Dictionary<Type, IService> map = new Dictionary<Type, IService>()
             {
                 { typeof(IGameService), new GameManager() },
-                { typeof(IHighscore), new HighscoreService() }
+                { typeof(IHighscore), new HighscoreService() },
+                { typeof(ISceneService), new SceneService() },
             };
 
             foreach (KeyValuePair<Type, IService> item in map)
@@ -37,9 +41,14 @@ namespace RPSLS.Framework
             onComplete?.Invoke();
         }
 
-        private void OnInitialized()
+        private IEnumerator OnInitialized()
         {
-            SceneManager.LoadSceneAsync(Constants.SceneNames.GAME);
+            yield return new WaitForSeconds(1);
+            ServiceLocator.GetService<ISceneService>().LoadScene(Constants.SceneNames.GAME, () =>
+            {
+                Debug.Log("Game Started");
+                // ServiceLocator.GetService<IGameService>().switch
+            });
         }
 
     }
