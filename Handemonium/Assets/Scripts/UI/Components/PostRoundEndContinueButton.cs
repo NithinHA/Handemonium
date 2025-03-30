@@ -1,15 +1,14 @@
-using System;
 using AYellowpaper.SerializedCollections;
 using RPSLS.Framework;
 using RPSLS.Player;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace RPSLS.UI
 {
     public class PostRoundEndContinueButton : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI m_ResultText;
+        [SerializeField] private Text m_ResultText;
         [SerializeField] private SerializedDictionary<RoundResult, string> m_RoundResultsMap; 
         
         public void Setup(RoundResult result)
