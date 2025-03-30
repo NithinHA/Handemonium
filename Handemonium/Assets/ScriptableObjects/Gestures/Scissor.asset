@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Scissor
   m_EditorClassIdentifier: 
   GestureType: 3
-  InferiorGestures: 0200000004000000
+  GestureAttackData:
+    _serializedList:
+    - Key: 2
+      Value: Cut
+    - Key: 4
+      Value: Decapitated
   ButtonSprite: {fileID: -4781924362407215786, guid: 71f2ff0186004974fb05cdf387007202, type: 3}
   HitParticles: {fileID: 7124019182849037366, guid: 055b7520c6e7638419eaae745404f456, type: 3}

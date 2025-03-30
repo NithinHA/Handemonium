@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AYellowpaper.SerializedCollections;
@@ -11,7 +10,7 @@ namespace RPSLS.Game
     public class HandDisplay : MonoBehaviour
     {
         [SerializeField] private SerializedDictionary<GestureType, GameObject> m_GestureHands;
-        [SerializeField] private float m_MoveSpeed = 5f;
+        [SerializeField] private float m_MoveDuration = 1f;
         [SerializeField] private float m_MoveDistance = 10f;
         [Space]
         [SerializeField] 
@@ -53,12 +52,7 @@ namespace RPSLS.Game
         private async Task TranslateSourceToDest(Vector2 source, Vector2 target)
         {
             transform.position = source;
-            float thresholdSq = _threshold * _threshold;
-            while ((target - (Vector2)transform.position).sqrMagnitude > thresholdSq)
-            {
-                transform.position = Vector2.MoveTowards(transform.position, target, m_MoveSpeed * Time.deltaTime);
-                await Task.Yield();
-            }
+            await transform.DOMove(target, m_MoveDuration).SetEase(Ease.OutBack).AsyncWaitForCompletion();
         }
         
         void RandomMovement()

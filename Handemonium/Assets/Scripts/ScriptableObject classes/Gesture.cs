@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 namespace RPSLS
@@ -7,14 +9,27 @@ namespace RPSLS
     public class Gesture : ScriptableObject
     {
         public GestureType GestureType;
-        public List<GestureType> InferiorGestures = new List<GestureType>();
+        public SerializedDictionary<GestureType, string> GestureAttackData; 
+        [Space]
         public Sprite ButtonSprite;
         public GameObject HitParticles;
+        
+        private List<GestureType> _inferiorGestures;
 
         public bool Beats(GestureType other)
         {
-            return InferiorGestures.Contains(other);
+            if (_inferiorGestures == null || _inferiorGestures.Count == 0)
+                _inferiorGestures = GestureAttackData.Keys.ToList();
+
+            return _inferiorGestures.Contains(other);
         }
+    }
+
+    [System.Serializable]
+    public struct GestureAttackData
+    {
+        public GestureType Type;
+        public string AttackName;
     }
 
     [System.Serializable]

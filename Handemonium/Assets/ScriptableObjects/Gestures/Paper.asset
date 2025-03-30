@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Paper
   m_EditorClassIdentifier: 
   GestureType: 2
-  InferiorGestures: 0100000005000000
+  GestureAttackData:
+    _serializedList:
+    - Key: 1
+      Value: Covered
+    - Key: 5
+      Value: Disproved
   ButtonSprite: {fileID: -7099375330327625411, guid: 185ff3416f8fb074c85b8ddfa1c7ee99, type: 3}
   HitParticles: {fileID: 7124019182849037366, guid: 947835dcfa08a9c468052e120354596d, type: 3}

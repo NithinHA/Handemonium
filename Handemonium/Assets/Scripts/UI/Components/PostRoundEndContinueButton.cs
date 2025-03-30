@@ -1,6 +1,6 @@
 using AYellowpaper.SerializedCollections;
 using RPSLS.Framework;
-using RPSLS.Player;
+using RPSLS.Game;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,14 +8,27 @@ namespace RPSLS.UI.Component
 {
     public class PostRoundEndContinueButton : MonoBehaviour
     {
+        [SerializeField] private Text m_ResultDesc;
         [SerializeField] private Text m_ResultText;
-        [SerializeField] private SerializedDictionary<RoundResult, string> m_RoundResultsMap; 
+        [SerializeField] private SerializedDictionary<RoundResultState, string> m_RoundResultsMap; 
         
-        public void Setup(RoundResult result)
+        public void Setup(RoundResultDesc result)
         {
             gameObject.SetActive(true);
-            m_RoundResultsMap.TryGetValue(result, out string resultString);
+            m_RoundResultsMap.TryGetValue(result.Result, out string resultString);
             m_ResultText.text = resultString;
+
+            m_ResultDesc.text = string.Empty;
+            if (result.Winner.GestureType == GestureType.None || result.Loser.GestureType == GestureType.None)
+                return;
+            if (result.Result == RoundResultState.Draw)
+                return;
+
+            string attackName = result.Winner.GestureAttackData[result.Loser.GestureType];
+            attackName = result.Result == RoundResultState.Win ? 
+                attackName.ToLime() : 
+                attackName.ToOrange();
+            m_ResultDesc.text = $"{result.Winner.GestureType}\n{attackName}\n{result.Loser.GestureType}";
         }
         
         public void OnClickContinue()

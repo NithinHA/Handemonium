@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RPSLS.Framework;
 using RPSLS.Framework.Services;
+using RPSLS.Game;
 using UnityEngine;
 
 namespace RPSLS.Player
@@ -41,6 +42,7 @@ namespace RPSLS.Player
                 PlayerOpponent.ShowHand()
             };
             await Task.WhenAll(tasks);
+            await Task.Delay(400);  // a small delay
 
             InGameController.Instance.ComputeResult();
         }
@@ -55,17 +57,17 @@ namespace RPSLS.Player
             await Task.WhenAll(tasks);
         }
 
-        public RoundResult GetRoundResult()
+        public RoundResultDesc GetRoundResult()
         {
             Gesture selfGesture = PlayerSelf.SelectedGesture;
             Gesture opponentGesture = PlayerOpponent.SelectedGesture;
             Gesture result = InGameController.Instance.GameRules.GetWinner(selfGesture, opponentGesture);
 
             if (result == selfGesture)
-                return RoundResult.Win;
+                return new RoundResultDesc(selfGesture, opponentGesture, RoundResultState.Win);
             if (result == opponentGesture)
-                return RoundResult.Lose;
-            return RoundResult.Draw;
+                return new RoundResultDesc(opponentGesture, selfGesture, RoundResultState.Lose);
+            return new RoundResultDesc(selfGesture, opponentGesture, RoundResultState.Draw);
         }
 
 #region Event listeners
@@ -99,25 +101,20 @@ namespace RPSLS.Player
 
         private void OnRoundResult(RoundState prevState, RoundState curState)
         {
-            switch (InGameController.Instance.CurrentRoundResult)
+            switch (InGameController.Instance.CurrentRoundResult.Result)
             {
-                case RoundResult.Win:
+                case RoundResultState.Win:
                     PlayerOpponent.OnHit(PlayerSelf.SelectedGesture);
                     break;
-                case RoundResult.Lose:
+                case RoundResultState.Lose:
                     PlayerSelf.OnHit(PlayerOpponent.SelectedGesture);
                     break;
-                case RoundResult.Draw:
+                case RoundResultState.Draw:
                     break;
             }
         }
         
 #endregion
 
-    }
-
-    public enum RoundResult
-    {
-        None, Win, Draw, Lose
     }
 }

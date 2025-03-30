@@ -35,7 +35,7 @@ namespace RPSLS.Player
         {
             await m_HandDisplay.Retract();
         }
-        
+
         public virtual void OnRoundBegin()
         {
         }

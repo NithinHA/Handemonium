@@ -22,8 +22,8 @@ namespace RPSLS.Framework
         
 #region Round results
 
-        private readonly List<RoundResult> _roundResults = new List<RoundResult>();
-        public RoundResult CurrentRoundResult { get; private set; }
+        private readonly List<RoundResultDesc> _roundResults = new List<RoundResultDesc>();
+        public RoundResultDesc CurrentRoundResult { get; private set; }
 
 #endregion
         
@@ -94,14 +94,14 @@ namespace RPSLS.Framework
             await m_PlayerRegistry.HidePlayerHands();
             m_PlayerRegistry.Reset();
 
-            switch (CurrentRoundResult)
+            switch (CurrentRoundResult.Result)
             {
-                case RoundResult.None:
-                case RoundResult.Win:
-                case RoundResult.Draw:
+                case RoundResultState.None:
+                case RoundResultState.Win:
+                case RoundResultState.Draw:
                     ServiceLocator.GetRoundManager().SwitchState(RoundState.Start);
                     break;
-                case RoundResult.Lose:
+                case RoundResultState.Lose:
                     ServiceLocator.GetRoundManager().SwitchState(RoundState.Idle);
                     var highscoreService = ServiceLocator.GetHighscoreService();
                     if (highscoreService.GetHighscore() < GetCurrentScore)
@@ -132,18 +132,18 @@ namespace RPSLS.Framework
             switch (curState)
             {
                 case RoundState.Start:
-                    CurrentRoundResult = RoundResult.None;
+                    CurrentRoundResult = new RoundResultDesc();
                     m_InfoBoard.Reset();
                     break;
                 case RoundState.Result:
-                    switch (CurrentRoundResult)
+                    switch (CurrentRoundResult.Result)
                     {
-                        case RoundResult.Win:
+                        case RoundResultState.Win:
                             IncrementScore();
                             break;
-                        case RoundResult.Draw:
+                        case RoundResultState.Draw:
                             break;
-                        case RoundResult.Lose:
+                        case RoundResultState.Lose:
                             break;
                     }
                     break;

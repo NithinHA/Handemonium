@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   GestureType: 1
-  InferiorGestures: 0400000003000000
+  GestureAttackData:
+    _serializedList:
+    - Key: 3
+      Value: Crushed
+    - Key: 4
+      Value: Crushed
   ButtonSprite: {fileID: -8212845824608125345, guid: 84012d58862f13a4782fc686fcf1118e, type: 3}
   HitParticles: {fileID: 7124019182849037366, guid: a64a21d080e3c8f46b947b027b8fd9a4, type: 3}
