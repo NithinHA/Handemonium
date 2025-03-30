@@ -9,6 +9,9 @@ public class BootstrapDummy : MonoBehaviour
 {
     private void Awake()
     {
+        if (FindAnyObjectByType<Bootstrap>())
+            return;
+
         InitializeAllServices(() => StartCoroutine(OnInitialized()));
     }
 

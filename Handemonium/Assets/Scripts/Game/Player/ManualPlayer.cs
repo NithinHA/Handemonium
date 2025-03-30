@@ -8,7 +8,7 @@ namespace RPSLS.Player
         public override void MakeChoice(GestureType gestureType)
         {
             SelectedGesture = InGameController.Instance.GameRules.GetGestureFromType(gestureType);
-            Debug.Log($"Manual player choice made => {SelectedGesture}".ToNavy());
+            Debug.Log($"Manual player choice made => {SelectedGesture}".ToBrown());
         }
     }
 }

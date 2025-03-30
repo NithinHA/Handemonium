@@ -6808,7 +6808,7 @@ MonoBehaviour:
   GameRules: {fileID: 11400000, guid: f2ff1970a87c2e54aa1267213f22a1a9, type: 2}
   DecisionTimerInSeconds: 5
   m_Environment: {fileID: 920703458}
-  _playerRegistry: {fileID: 0}
+  _playerRegistry: {fileID: 409873169}
 --- !u!1 &1940380257
 GameObject:
   m_ObjectHideFlags: 0
