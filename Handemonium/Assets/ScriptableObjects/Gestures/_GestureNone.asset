@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8fa93a28b6cb49b4ea0adc6acc9966f9, type: 3}
-  m_Name: Rock
+  m_Name: _GestureNone
   m_EditorClassIdentifier: 
-  GestureType: 1
-  InferiorGestures: 0400000003000000
-  ButtonSprite: {fileID: -8212845824608125345, guid: 84012d58862f13a4782fc686fcf1118e, type: 3}
+  GestureType: 0
+  InferiorGestures: 
+  ButtonSprite: {fileID: 0}
   HitParticles: {fileID: 7124019182849037366, guid: 88011c4ae87f7574a8db638f91f1420f, type: 3}

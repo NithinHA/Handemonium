@@ -7,10 +7,12 @@ namespace RPSLS
     public class GameRules : ScriptableObject
     {
         public List<Gesture> AllGestures;
-        private Dictionary<GestureType, Gesture> _gestureMap = new Dictionary<GestureType, Gesture>();
+        public Gesture EmptyHandGesture;
+        private Dictionary<GestureType, Gesture> _gestureMap = null;
         
         private void InitGestureMap()
         {
+            _gestureMap = new Dictionary<GestureType, Gesture>();
             foreach (Gesture gesture in AllGestures)
             {
                 _gestureMap.Add(gesture.GestureType, gesture);

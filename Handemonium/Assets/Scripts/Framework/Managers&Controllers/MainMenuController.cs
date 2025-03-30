@@ -1,11 +1,13 @@
 using System.Threading.Tasks;
 using RPSLS.Framework.Services;
 using RPSLS.UI;
+using UnityEngine;
 
 namespace RPSLS.Framework
 {
     public class MainMenuController : Singleton<MainMenuController>
     {
+        [SerializeField] private GameObject m_EnvironmentMainMenu;
 
 #region Unity callbacks
         
@@ -25,24 +27,26 @@ namespace RPSLS.Framework
 
         public void Setup()
         {
-            // for each hand sprite, call Show()
-            // call MainMenuPanle.Show()
+            m_EnvironmentMainMenu.SetActive(true);
+            // await Animate-in hands
             UIManager.Instance.MainMenuPanel.Show();
         }
 
-        public async Task Reset()
+        public void Reset()
         {
-            // call Hide() on hands
-            // hide UI
+            m_EnvironmentMainMenu.SetActive(false);
             UIManager.Instance.MainMenuPanel.Hide();
-            await Task.Delay(1000); // dummy
         }
 
 #region Event listeners
         
         private void OnGameStateChanged(GameState prevState, GameState curState)
         {
-            if (curState == GameState.MainMenu)
+            if (prevState == GameState.MainMenu && curState != GameState.MainMenu)
+            {
+                Reset();
+            }
+            else if (curState == GameState.MainMenu)
             {
                 Setup();
             }
@@ -50,8 +54,8 @@ namespace RPSLS.Framework
 
         public async void OnPlayClicked()
         {
-            await Reset();
-            // Perform screenTransition-> AnimateIn-> invoke SwitchScreenState()-> AnimateOut 
+            // Animate-out hands
+            // Perform screenTransition-> Animate-in-> invoke SwitchState(InGame)-> Animate-out 
             ServiceLocator.GetGameManager().SwitchState(GameState.InGame);
         }
 

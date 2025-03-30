@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fa93a28b6cb49b4ea0adc6acc9966f9, type: 3}
   m_Name: Scissor
   m_EditorClassIdentifier: 
-  GestureType: 2
-  InferiorGestures: 0100000003000000
+  GestureType: 3
+  InferiorGestures: 0200000004000000
   ButtonSprite: {fileID: -4781924362407215786, guid: 71f2ff0186004974fb05cdf387007202, type: 3}
+  HitParticles: {fileID: 7124019182849037366, guid: 88011c4ae87f7574a8db638f91f1420f, type: 3}

@@ -24,7 +24,6 @@ namespace RPSLS.Framework
         {
             foreach (KeyValuePair<Type, IService> item in _services)
             {
-                // UnregisterService(item.Key); // commented out to remove the redundant TryGetValue check.
                 item.Value.OnDestroy();
             }
             _services.Clear();
@@ -67,6 +66,11 @@ namespace RPSLS.Framework
         public static IGameService GetGameManager()
         {
             return HasService(typeof(IGameService)) ? GetService<IGameService>() : null;
+        }
+        
+        public static IRoundService GetRoundManager()
+        {
+            return HasService(typeof(IRoundService)) ? GetService<IRoundService>() : null;
         }
         
         public static IHighscore GetHighscoreService()

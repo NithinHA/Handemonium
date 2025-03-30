@@ -18,3 +18,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6b28d9176b2fdc4b99fec7b57b4a454, type: 2}
   - {fileID: 11400000, guid: 6c42eee6e1b5ca34d8c5712996d35c38, type: 2}
   - {fileID: 11400000, guid: 119733f63192bf04697539cbe74cdec2, type: 2}
+  EmptyHandGesture: {fileID: 11400000, guid: 2c065ef2b172536429ea8e118486b272, type: 2}

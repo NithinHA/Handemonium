@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fa93a28b6cb49b4ea0adc6acc9966f9, type: 3}
   m_Name: Lizard
   m_EditorClassIdentifier: 
-  GestureType: 3
-  InferiorGestures: 0400000001000000
+  GestureType: 4
+  InferiorGestures: 0200000005000000
   ButtonSprite: {fileID: -2125549708984300737, guid: 10dc18e1866b7704e91b14b8affbfa00, type: 3}
+  HitParticles: {fileID: 7124019182849037366, guid: 88011c4ae87f7574a8db638f91f1420f, type: 3}

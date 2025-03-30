@@ -10,7 +10,7 @@ namespace RPSLS
 {
     public static class Utility
     {
-        public static void ImageFadeEffect(Image image, float startAmount = 0, float endAmount = 1, float duration = 3, Action onComplete = null)
+        public static void ImageFadeEffect(Image image, float startAmount = 0, float endAmount = 1, float duration = 1, Action onComplete = null)
         {
             Color color = image.color;
             color.a = startAmount;
@@ -21,6 +21,18 @@ namespace RPSLS
             {
                 onComplete?.Invoke();
             });
+        }
+
+        public static int GetWeightedRandom(float[] weights, float totalWeight)
+        {
+            float randomVal = UnityEngine.Random.Range(0, totalWeight);
+            for (int i = 0; i < weights.Length; i++)
+            {
+                if(randomVal <= weights[i])
+                    return i;
+                randomVal -= weights[i];
+            }
+            return weights.Length - 1;
         }
     }
 }

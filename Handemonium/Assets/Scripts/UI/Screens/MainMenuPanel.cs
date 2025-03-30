@@ -9,13 +9,12 @@ namespace RPSLS.UI
     {
         [SerializeField] private Image m_PlayButtonImage;
         [SerializeField] private MainMenuHighscoreDisplay m_MainMenuHighscore;
-        [FormerlySerializedAs("m_MusicButton")]
         [Header("Music button")]
         [SerializeField] private Image m_MusicImage;
         [SerializeField] private Sprite m_MusicOn;
         [SerializeField] private Sprite m_MusicOff;
-        
-        private bool _isMusicOn;
+
+        private bool _isMusicOn = true;
         
         public override void Show()
         {
@@ -23,6 +22,7 @@ namespace RPSLS.UI
             Utility.ImageFadeEffect(m_PlayButtonImage, onComplete: () => TogglePlayButtonInteraction(true));
             Utility.ImageFadeEffect(m_MusicImage);
             m_MainMenuHighscore.Setup();
+            SetMusicButton();
         }
 
         public override void Hide()
@@ -48,7 +48,7 @@ namespace RPSLS.UI
 
             _isMusicOn = !_isMusicOn;
             audio.Source.mute = !_isMusicOn;
-            m_MusicImage.sprite = _isMusicOn ? m_MusicOn : m_MusicOff;
+            SetMusicButton();
         }
 
 #endregion
@@ -56,6 +56,11 @@ namespace RPSLS.UI
         private void TogglePlayButtonInteraction(bool active)
         {
             m_PlayButtonImage.raycastTarget = active;
+        }
+
+        private void SetMusicButton()
+        {
+            m_MusicImage.sprite = _isMusicOn ? m_MusicOn : m_MusicOff;
         }
     }
 }

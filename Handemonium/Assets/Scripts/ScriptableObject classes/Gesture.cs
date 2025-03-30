@@ -9,6 +9,7 @@ namespace RPSLS
         public GestureType GestureType;
         public List<GestureType> InferiorGestures = new List<GestureType>();
         public Sprite ButtonSprite;
+        public GameObject HitParticles;
 
         public bool Beats(GestureType other)
         {
@@ -19,6 +20,11 @@ namespace RPSLS
     [System.Serializable]
     public enum GestureType
     {
-        None, Rock, Paper, Scissors, Lizard, Spock
+        None = 0,
+        Rock = 1,
+        Paper = 2,
+        Scissor = 3,
+        Lizard = 4,
+        Spock = 5
     }
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fa93a28b6cb49b4ea0adc6acc9966f9, type: 3}
   m_Name: Spock
   m_EditorClassIdentifier: 
-  GestureType: 4
-  InferiorGestures: 0000000002000000
+  GestureType: 5
+  InferiorGestures: 0100000003000000
   ButtonSprite: {fileID: 2625318788580759319, guid: 5b05f68280a27484eaac29b08c2eda0e, type: 3}
+  HitParticles: {fileID: 7124019182849037366, guid: 88011c4ae87f7574a8db638f91f1420f, type: 3}

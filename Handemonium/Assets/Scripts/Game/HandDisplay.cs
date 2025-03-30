@@ -1,21 +1,45 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AYellowpaper.SerializedCollections;
+using DG.Tweening;
 using UnityEngine;
+using Random = Unity.Mathematics.Random;
 
 namespace RPSLS.Game
 {
     public class HandDisplay : MonoBehaviour
     {
         [SerializeField] private SerializedDictionary<GestureType, GameObject> m_GestureHands;
+        [SerializeField] private float m_MoveSpeed = 5f;
+        [SerializeField] private float m_MoveDistance = 10f;
+        [Space]
+        [SerializeField] 
 
         private GameObject _selectedHand;
-        
-        public void Show(GestureType gestureType)
+        private Vector2 _originalPos;
+        private Vector2 _targetPos;
+        private float _threshold = 1f;
+
+        private void Start()
         {
-            Reset();
+            _originalPos = transform.position;
+            _targetPos = (Vector2)transform.position + ((Vector2)transform.up * m_MoveDistance);
+        }
+
+        public async Task Extend(GestureType gestureType)
+        {
+            Reset();            // just in case. Not mandatory. 
             _selectedHand = m_GestureHands[gestureType];
             _selectedHand.SetActive(true);
-            AnimateHand();
+            await TranslateSourceToDest(_originalPos, _targetPos);
+        }
+
+        public async Task Retract()
+        {
+            await TranslateSourceToDest(_targetPos, _originalPos);
+            _selectedHand.SetActive(false);
+            _selectedHand = null;
         }
 
         private void Reset()
@@ -26,9 +50,23 @@ namespace RPSLS.Game
             }
         }
 
-        private void AnimateHand()
+        private async Task TranslateSourceToDest(Vector2 source, Vector2 target)
         {
-            
+            transform.position = source;
+            float thresholdSq = _threshold * _threshold;
+            while ((target - (Vector2)transform.position).sqrMagnitude > thresholdSq)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, target, m_MoveSpeed * Time.deltaTime);
+                await Task.Yield();
+            }
+        }
+        
+        void RandomMovement()
+        {
+            Vector3 randomOffset = new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), 0);
+            transform.DOMove(transform.position + randomOffset, 1f)
+                .SetEase(Ease.InOutSine)
+                .OnComplete(RandomMovement); // Recursively call for continuous movement
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using RPSLS.Framework.Services;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace RPSLS.Framework
 {
@@ -31,6 +30,7 @@ namespace RPSLS.Framework
                 { typeof(IGameService), new GameManager() },
                 { typeof(IHighscore), new HighscoreService() },
                 { typeof(ISceneService), new SceneService() },
+                { typeof(IRoundService), new RoundManager() },
             };
 
             foreach (KeyValuePair<Type, IService> item in map)
