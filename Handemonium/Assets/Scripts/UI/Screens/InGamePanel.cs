@@ -1,6 +1,7 @@
 using System;
 using RPSLS.Framework;
 using RPSLS.Framework.Services;
+using RPSLS.UI.Component;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +11,9 @@ namespace RPSLS.UI
     {
         [SerializeField] private TimeRemainProgressBar m_ProgressBar;
         [SerializeField] private TextMeshProUGUI m_ScoreDisplayText;
+        [Space]
         [SerializeField] private PostRoundEndContinueButton m_PostRoundEndContinueButton;
+        [SerializeField] private GestureCardButton[] m_GestureButtons;
 
 #region Unity callbacks
         
@@ -40,25 +43,6 @@ namespace RPSLS.UI
             m_ScoreDisplayText.text = "0";
         }
 
-        private Action<GestureType> _onGestureClick;
-
-        public void OnClickGesture(int type)
-        {
-            GestureType gesture = (GestureType)type;
-            _onGestureClick?.Invoke(gesture);
-        }
-
-        private void UpdatePlayerSelectedGesture(GestureType gestureType)
-        {
-            InGameController.Instance.PlayerRegistry.PlayerSelf.MakeChoice(gestureType);
-        }
-
-        private void HighlightInfoPanelOnTable(GestureType gestureType)
-        {
-            Debug.Log($"{gestureType} clicked!");
-        }
-
-
 #region Event listeners
         
         private void OnRoundStateChange(RoundState prevState, RoundState curState)
@@ -80,19 +64,17 @@ namespace RPSLS.UI
         private void OnRoundBegin()
         {
             m_ProgressBar.OnRoundStarted();
-            // set button callbacks to perform Player.SelectGesture
-            _onGestureClick = UpdatePlayerSelectedGesture;
+            foreach (GestureCardButton gestureButton in m_GestureButtons)
+            {
+                gestureButton.OnRoundStart();
+            }
         }
 
         private void OnRoundEnd()
-        {
-            // set button callbacks to perform InfoTable.SelectGesture(gesture);
-            _onGestureClick = HighlightInfoPanelOnTable;
-        }
+        { }
 
         private void OnRoundResult()
         {
-            _onGestureClick = HighlightInfoPanelOnTable;
             // Display end screen -> Win/Lose/Draw with text "Tap to continue..."
             m_PostRoundEndContinueButton.Setup(InGameController.Instance.CurrentRoundResult);
         }

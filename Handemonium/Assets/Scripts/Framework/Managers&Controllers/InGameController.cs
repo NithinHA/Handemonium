@@ -12,9 +12,10 @@ namespace RPSLS.Framework
         public float DecisionTimerInSeconds = 3f;
         [Space]
         [SerializeField] private GameObject m_Environment;
-        [SerializeField] private PlayerRegistry _playerRegistry;
-
-        public PlayerRegistry PlayerRegistry => _playerRegistry;
+        [SerializeField] private PlayerRegistry m_PlayerRegistry;
+        
+        public BasePlayer GetPlayerSelf => m_PlayerRegistry.PlayerSelf;
+        public BasePlayer GetPlayerOpponent => m_PlayerRegistry.PlayerOpponent;
         
 #region Round results
 
@@ -57,7 +58,7 @@ namespace RPSLS.Framework
             m_Environment.SetActive(true);
             _scoreHandler.ResetScore();
             UIManager.Instance.InGamePanel.Show();
-            PlayerRegistry.Setup();
+            m_PlayerRegistry.Setup();
             // can wait for sometime before switching round state; or assign the control to some button.
             
             ServiceLocator.GetRoundManager().SwitchState(RoundState.Start);     // responsible for starting round timer.
@@ -69,7 +70,7 @@ namespace RPSLS.Framework
             m_Environment.SetActive(false);
             _scoreHandler.ResetScore();
             UIManager.Instance.InGamePanel.Hide();
-            PlayerRegistry.Reset();
+            m_PlayerRegistry.Reset();
             _roundResults.Clear();
         }
 
@@ -80,15 +81,15 @@ namespace RPSLS.Framework
 
         public void ComputeResult()
         {
-            CurrentRoundResult = PlayerRegistry.GetRoundResult();
+            CurrentRoundResult = m_PlayerRegistry.GetRoundResult();
             _roundResults.Add(CurrentRoundResult);
             ServiceLocator.GetRoundManager().SwitchState(RoundState.Result);
         }
 
         public async void OnPostRoundEndContinue()
         {
-            await PlayerRegistry.HidePlayerHands();
-            PlayerRegistry.Reset();
+            await m_PlayerRegistry.HidePlayerHands();
+            m_PlayerRegistry.Reset();
 
             switch (CurrentRoundResult)
             {

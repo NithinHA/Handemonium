@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace RPSLS.UI
+namespace RPSLS.UI.Component
 {
     public class MainMenuHighscoreDisplay : MonoBehaviour
     {
