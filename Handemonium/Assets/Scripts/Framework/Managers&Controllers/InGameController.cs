@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RPSLS.Framework.Services;
+using RPSLS.Game;
 using RPSLS.Player;
 using RPSLS.UI;
 using UnityEngine;
@@ -12,10 +13,12 @@ namespace RPSLS.Framework
         public float DecisionTimerInSeconds = 3f;
         [Space]
         [SerializeField] private GameObject m_Environment;
+        [SerializeField] private InfoBoard m_InfoBoard;
         [SerializeField] private PlayerRegistry m_PlayerRegistry;
         
         public BasePlayer GetPlayerSelf => m_PlayerRegistry.PlayerSelf;
         public BasePlayer GetPlayerOpponent => m_PlayerRegistry.PlayerOpponent;
+        public InfoBoard GetInfoBoard => m_InfoBoard;
         
 #region Round results
 
@@ -130,6 +133,7 @@ namespace RPSLS.Framework
             {
                 case RoundState.Start:
                     CurrentRoundResult = RoundResult.None;
+                    m_InfoBoard.Reset();
                     break;
                 case RoundState.Result:
                     switch (CurrentRoundResult)

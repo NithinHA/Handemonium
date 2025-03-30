@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4990150072040572727}
   - component: {fileID: 1139234058835879361}
   m_Layer: 0
-  m_Name: particles
+  m_Name: fx_rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,8 +222,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.7444163, g: 0.9245283, b: 0.18665004, a: 1}
-      maxColor: {r: 0.17441794, g: 0.7056604, b: 0.19558199, a: 1}
+      minColor: {r: 0.78867924, g: 0.15922391, b: 0.24627635, a: 1}
+      maxColor: {r: 0.83396226, g: 0.44444835, b: 0.33201134, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

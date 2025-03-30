@@ -1247,7 +1247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &408496756
 Transform:
   m_ObjectHideFlags: 0
@@ -3375,7 +3375,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1049732224
 Transform:
   m_ObjectHideFlags: 0
@@ -3917,6 +3917,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1188211339}
   - component: {fileID: 1188211340}
+  - component: {fileID: 1188211341}
   m_Layer: 0
   m_Name: RPSLS_InfoPanel
   m_TagString: Untagged
@@ -3937,11 +3938,11 @@ Transform:
   m_LocalScale: {x: 0.9047082, y: 0.5710568, z: 0.9047082}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 1007490609}
   - {fileID: 410634130}
-  - {fileID: 1432393325}
   - {fileID: 1940380258}
   - {fileID: 1853831629}
-  - {fileID: 1007490609}
+  - {fileID: 1432393325}
   m_Father: {fileID: 951883930}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1188211340
@@ -3999,6 +4000,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1188211341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188211338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a892f25f3b241e2a63aef41d18d6b82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GestureBoardData:
+  - Gesture: {fileID: 11400000, guid: f6b28d9176b2fdc4b99fec7b57b4a454, type: 2}
+    HighlightSuccess: {fileID: 1324401994}
+    HighlightFailure: {fileID: 389915196}
+  - Gesture: {fileID: 11400000, guid: 530edc6b990729649b93d126c5490484, type: 2}
+    HighlightSuccess: {fileID: 1976656068}
+    HighlightFailure: {fileID: 408496755}
+  - Gesture: {fileID: 11400000, guid: 6c42eee6e1b5ca34d8c5712996d35c38, type: 2}
+    HighlightSuccess: {fileID: 1049732223}
+    HighlightFailure: {fileID: 982982309}
+  - Gesture: {fileID: 11400000, guid: 75d38e9e6893373428c433a25a98d681, type: 2}
+    HighlightSuccess: {fileID: 653095630}
+    HighlightFailure: {fileID: 1547372343}
+  - Gesture: {fileID: 11400000, guid: 119733f63192bf04697539cbe74cdec2, type: 2}
+    HighlightSuccess: {fileID: 1717662851}
+    HighlightFailure: {fileID: 1686191232}
 --- !u!1 &1232855300
 GameObject:
   m_ObjectHideFlags: 0
@@ -4353,7 +4382,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1324401995
 Transform:
   m_ObjectHideFlags: 0
@@ -5313,7 +5342,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1686191233
 Transform:
   m_ObjectHideFlags: 0
@@ -5680,6 +5709,7 @@ MonoBehaviour:
   GameRules: {fileID: 11400000, guid: f2ff1970a87c2e54aa1267213f22a1a9, type: 2}
   DecisionTimerInSeconds: 5
   m_Environment: {fileID: 920703458}
+  m_InfoBoard: {fileID: 1188211341}
   m_PlayerRegistry: {fileID: 409873169}
 --- !u!1 &1940380257
 GameObject:

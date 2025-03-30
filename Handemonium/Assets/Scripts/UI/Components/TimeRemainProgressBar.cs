@@ -29,12 +29,12 @@ namespace RPSLS.UI.Component
                 _inGameController = InGameController.Instance;
 
             float duration = _inGameController.DecisionTimerInSeconds;
-            m_FillImage.DOFillAmount(0f, duration).OnComplete(() =>
+            m_FillImage.DOFillAmount(0f, duration).SetEase(Ease.OutSine).OnComplete(() =>
             {
                 _inGameController.OnTimerComplete();
             });
         }
-        
+
         public void Reset()
         {
             m_FillImage.fillAmount = 1f;

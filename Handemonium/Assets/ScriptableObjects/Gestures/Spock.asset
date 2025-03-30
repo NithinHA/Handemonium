@@ -15,4 +15,4 @@ MonoBehaviour:
   GestureType: 5
   InferiorGestures: 0100000003000000
   ButtonSprite: {fileID: 2625318788580759319, guid: 5b05f68280a27484eaac29b08c2eda0e, type: 3}
-  HitParticles: {fileID: 7124019182849037366, guid: 88011c4ae87f7574a8db638f91f1420f, type: 3}
+  HitParticles: {fileID: 7124019182849037366, guid: 89d073659b10b3b468a458aee6528c4f, type: 3}

@@ -63,6 +63,9 @@ namespace RPSLS.UI.Component
         {
             StopFloating();
             ToggleHighlight(false);
+            // reset position and scale
+            _rectTransform.anchoredPosition = _originalPosition;
+            _rectTransform.localScale = _originalScale;
         }
 
         private void OnDestroy()
@@ -76,8 +79,8 @@ namespace RPSLS.UI.Component
             _canvas.sortingOrder = _sortingOrderSelected;
             _rectTransform.DOAnchorPosY(_originalPosition.y + m_MoveUpAmount, m_TransitionDuration).SetEase(Ease.OutQuad);
             transform.DOScale(_originalScale * m_ScaleFactor, m_TransitionDuration).SetEase(Ease.OutBack);
-            
-            // InfoBoard.ToggleHighlight(true, m_Gesture.GestureType);
+
+            InGameController.Instance.GetInfoBoard.ToggleHighlight(true, m_Gesture);
         }
 
         public void OnPointerUp(PointerEventData eventData)
@@ -89,8 +92,8 @@ namespace RPSLS.UI.Component
                     _canvas.sortingOrder = _sortingOrderNormal;
                     StartFloating();
                 });
-            
-            // InfoBoard.ToggleHighlight(m_m_Gesture.GestureType);
+
+            InGameController.Instance.GetInfoBoard.ToggleHighlight(false, m_Gesture);
         }
 
 #endregion
