@@ -131,6 +131,7 @@ namespace RPSLS.Framework
         {
             switch (curState)
             {
+                case RoundState.Idle:
                 case RoundState.Start:
                     CurrentRoundResult = new RoundResultDesc();
                     m_InfoBoard.Reset();
@@ -140,13 +141,13 @@ namespace RPSLS.Framework
                     {
                         case RoundResultState.Win:
                             IncrementScore();
-                            AudioManager.Instance.PlaySound(Constants.Audio.WIN);
+                            AudioManager.Instance?.PlaySound(Constants.Audio.WIN);
                             break;
                         case RoundResultState.Draw:
-                            AudioManager.Instance.PlaySound(Constants.Audio.DRAW);
+                            AudioManager.Instance?.PlaySound(Constants.Audio.DRAW);
                             break;
                         case RoundResultState.Lose:
-                            AudioManager.Instance.PlaySound(Constants.Audio.LOSE);
+                            AudioManager.Instance?.PlaySound(Constants.Audio.LOSE);
                             break;
                     }
                     break;

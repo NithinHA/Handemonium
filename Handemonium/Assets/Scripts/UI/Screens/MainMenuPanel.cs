@@ -49,7 +49,7 @@ namespace RPSLS.UI
 
         public void OnClickMusicToggle()
         {
-            Sound sound = AudioManager.Instance.GetSound(Constants.Audio.BGM);
+            Sound sound = AudioManager.Instance?.GetSound(Constants.Audio.BGM);
             if (sound == null)
                 return;
 

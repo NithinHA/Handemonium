@@ -8,7 +8,7 @@ namespace RPSLS.UI
 
         public void OnButtonClick()
         {
-            AudioManager.Instance.PlaySound(Constants.Audio.CLICK);
+            AudioManager.Instance?.PlaySound(Constants.Audio.CLICK);
         }
     }
 }

@@ -84,7 +84,7 @@ namespace RPSLS.UI.Component
             _rectTransform.DOAnchorPosY(_originalPosition.y + m_MoveUpAmount, m_TransitionDuration).SetEase(Ease.OutQuad);
             transform.DOScale(_originalScale * m_ScaleFactor, m_TransitionDuration).SetEase(Ease.OutBack);
 
-            AudioManager.Instance.PlaySound(Constants.Audio.PICK);
+            AudioManager.Instance?.PlaySound(Constants.Audio.PICK);
             InGameController.Instance.GetInfoBoard.ToggleHighlight(true, m_Gesture);
         }
 
@@ -101,7 +101,7 @@ namespace RPSLS.UI.Component
                     StartFloating();
                 });
 
-            AudioManager.Instance.PlaySound(Constants.Audio.DROP);
+            AudioManager.Instance?.PlaySound(Constants.Audio.DROP);
             InGameController.Instance.GetInfoBoard.ToggleHighlight(false, m_Gesture);
         }
 

@@ -45,7 +45,7 @@ namespace RPSLS.Framework.Services
         private void OnGameStateChanged(GameState prevState, GameState curState)
         {
             if (prevState == GameState.Bootstrap)
-                AudioManager.Instance.PlaySound(Constants.Audio.BGM);
+                AudioManager.Instance?.PlaySound(Constants.Audio.BGM);
         }
 
 #endregion
