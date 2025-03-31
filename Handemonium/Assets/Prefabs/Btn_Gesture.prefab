@@ -576,4 +576,6 @@ MonoBehaviour:
   m_MoveUpAmount: 30
   m_TransitionDuration: 0.1
   m_FloatDuration: 5
-  m_FloatStrengthRange: {x: 4, y: 7}
+  m_FloatStrengthRange: {x: 10, y: 15}
+  m_FloatRandomness: 8
+  m_FloatVibrato: 1

@@ -57,24 +57,24 @@ namespace RPSLS.Framework
 
         public void Setup()
         {
-            // setup environment
             m_Environment.SetActive(true);
             _scoreHandler.ResetScore();
             UIManager.Instance.InGamePanel.Show();
             m_PlayerRegistry.Setup();
-            // can wait for sometime before switching round state; or assign the control to some button.
-            
-            ServiceLocator.GetRoundManager().SwitchState(RoundState.Start);     // responsible for starting round timer.
         }
 
         public void Reset()
         {
-            // reset environment
             m_Environment.SetActive(false);
             _scoreHandler.ResetScore();
             UIManager.Instance.InGamePanel.Hide();
             m_PlayerRegistry.Reset();
             _roundResults.Clear();
+        }
+
+        public void ClickBeginRound()
+        {
+            ServiceLocator.GetRoundManager().SwitchState(RoundState.Start);     // will start the round timer.
         }
 
         public void OnTimerComplete()
@@ -151,5 +151,6 @@ namespace RPSLS.Framework
         }
 
 #endregion
+
     }
 }

@@ -12,6 +12,7 @@ namespace RPSLS.UI
         [SerializeField] private TimeRemainProgressBar m_ProgressBar;
         [SerializeField] private TextMeshProUGUI m_ScoreDisplayText;
         [Space]
+        [SerializeField] private GameObject m_BeginRoundButton;
         [SerializeField] private PostRoundEndContinueButton m_PostRoundEndContinueButton;
         [SerializeField] private GestureCardButton[] m_GestureButtons;
 
@@ -34,6 +35,7 @@ namespace RPSLS.UI
         public override void Show()
         {
             base.Show();
+            m_BeginRoundButton.SetActive(true);
         }
 
         public override void Hide()
@@ -83,6 +85,16 @@ namespace RPSLS.UI
         {
             m_ScoreDisplayText.text = score.ToString();
         }
+
+#region OnClick events
+
+        public void OnClickBeginRound()
+        {
+            m_BeginRoundButton.SetActive(false);
+            InGameController.Instance.ClickBeginRound();
+        }
+
+#endregion
 
 #endregion
         

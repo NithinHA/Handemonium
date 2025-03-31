@@ -1,7 +1,6 @@
 using RPSLS.Framework;
-using RPSLS.UI.Component;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace RPSLS.UI
@@ -9,7 +8,7 @@ namespace RPSLS.UI
     public class MainMenuPanel : BaseUIPanel
     {
         [SerializeField] private Image m_PlayButtonImage;
-        [SerializeField] private MainMenuHighscoreDisplay m_MainMenuHighscore;
+        [SerializeField] private TextMeshProUGUI m_HighscoreText;
         [Header("Music button")]
         [SerializeField] private Image m_MusicImage;
         [SerializeField] private Sprite m_MusicOn;
@@ -20,17 +19,23 @@ namespace RPSLS.UI
         public override void Show()
         {
             base.Show();
-            Utility.ImageFadeEffect(m_PlayButtonImage, onComplete: () => TogglePlayButtonInteraction(true));
-            Utility.ImageFadeEffect(m_MusicImage);
-            m_MainMenuHighscore.Setup();
             SetMusicButton();
+            m_HighscoreText.text = $"{ServiceLocator.GetHighscoreService().GetHighscore()}";
+
+            Color color = m_PlayButtonImage.color;
+            color.a = 0;
+            m_PlayButtonImage.color = color;
         }
 
         public override void Hide()
         {
             base.Hide();
             TogglePlayButtonInteraction(false);
-            m_MainMenuHighscore.Reset();
+        }
+
+        public void DelayedEnablePlayButton()
+        {
+            Utility.ImageFadeEffect(m_PlayButtonImage, onComplete: () => TogglePlayButtonInteraction(true));
         }
 
 #region On click callbacks
@@ -43,12 +48,12 @@ namespace RPSLS.UI
 
         public void OnClickMusicToggle()
         {
-            Sound audio = AudioManager.Instance.GetSound(Constants.Audio.BGM);
-            if (audio == null)
+            Sound sound = AudioManager.Instance.GetSound(Constants.Audio.BGM);
+            if (sound == null)
                 return;
 
             _isMusicOn = !_isMusicOn;
-            audio.Source.mute = !_isMusicOn;
+            sound.Source.mute = !_isMusicOn;
             SetMusicButton();
         }
 
@@ -63,5 +68,6 @@ namespace RPSLS.UI
         {
             m_MusicImage.sprite = _isMusicOn ? m_MusicOn : m_MusicOff;
         }
+
     }
 }

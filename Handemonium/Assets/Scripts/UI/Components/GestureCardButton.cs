@@ -25,7 +25,9 @@ namespace RPSLS.UI.Component
         [SerializeField] private float m_TransitionDuration = .4f;
         [Header("Float settings")]
         [SerializeField] private float m_FloatDuration = 5;
-        [SerializeField] private Vector2 m_FloatStrengthRange = new Vector2(3, 6);
+        [SerializeField] private Vector2 m_FloatStrengthRange = new Vector2(10, 15);
+        [SerializeField] private float m_FloatRandomness = 8;
+        [SerializeField] private int m_FloatVibrato = 1;
 
         private Canvas _canvas;
         private int _sortingOrderNormal;
@@ -101,15 +103,14 @@ namespace RPSLS.UI.Component
         private void StartFloating()
         {
             float floatStrength = Random.Range(m_FloatStrengthRange.x, m_FloatStrengthRange.y);
-            _floatTween = _rectTransform.DOShakeAnchorPos(m_FloatDuration, new Vector2(0, floatStrength), 2, 0, false, false)
+            _floatTween = _rectTransform.DOShakeAnchorPos(m_FloatDuration, new Vector2(0, floatStrength), m_FloatVibrato, m_FloatRandomness, false, false)
                 .SetLoops(-1, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine);
         }
 
         private void StopFloating()
         {
-            if(_floatTween != null)
-                _floatTween.Kill();
+            _floatTween?.Kill();
             _floatTween = null;
         }
 
