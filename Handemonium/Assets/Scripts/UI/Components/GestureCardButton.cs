@@ -37,8 +37,9 @@ namespace RPSLS.UI.Component
         private Vector3 _originalPosition;
         private Vector3 _originalScale;
 
+        private bool _isTimerActive;        // indicates whether RoundState == Start; gets Set on RoundBegin; Reset on RoundEnd.
         private Tween _floatTween;
-        private static Action<GestureType, RoundState> OnGestureButtonClickEvent;
+        private static Action<GestureType> _onGestureButtonClickEvent;
 
 #region Unity callbacks
 
@@ -53,7 +54,7 @@ namespace RPSLS.UI.Component
             _originalPosition = _rectTransform.anchoredPosition;
             _originalScale = _rectTransform.localScale;
 
-            OnGestureButtonClickEvent += OnOtherGestureSelected;
+            _onGestureButtonClickEvent += OnOtherGestureSelected;
         }
 
         private void OnEnable()
@@ -65,28 +66,33 @@ namespace RPSLS.UI.Component
         {
             StopFloating();
             ToggleHighlight(false);
-            // reset position and scale
-            _rectTransform.anchoredPosition = _originalPosition;
-            _rectTransform.localScale = _originalScale;
+            ResetPositionAndScale();
         }
 
         private void OnDestroy()
         {
-            OnGestureButtonClickEvent -= OnOtherGestureSelected;
+            _onGestureButtonClickEvent -= OnOtherGestureSelected;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (_isTimerActive)
+                return;
+
             StopFloating();
             _canvas.sortingOrder = _sortingOrderSelected;
             _rectTransform.DOAnchorPosY(_originalPosition.y + m_MoveUpAmount, m_TransitionDuration).SetEase(Ease.OutQuad);
             transform.DOScale(_originalScale * m_ScaleFactor, m_TransitionDuration).SetEase(Ease.OutBack);
 
+            AudioManager.Instance.PlaySound(Constants.Audio.PICK);
             InGameController.Instance.GetInfoBoard.ToggleHighlight(true, m_Gesture);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (_isTimerActive)
+                return;
+
             _rectTransform.DOAnchorPosY(_originalPosition.y, m_TransitionDuration).SetEase(Ease.InQuad);
             transform.DOScale(_originalScale, m_TransitionDuration).SetEase(Ease.InBack)
                 .OnComplete(() =>
@@ -95,10 +101,17 @@ namespace RPSLS.UI.Component
                     StartFloating();
                 });
 
+            AudioManager.Instance.PlaySound(Constants.Audio.DROP);
             InGameController.Instance.GetInfoBoard.ToggleHighlight(false, m_Gesture);
         }
 
 #endregion
+
+        private void ResetPositionAndScale()
+        {
+            _rectTransform.anchoredPosition = _originalPosition;
+            _rectTransform.localScale = _originalScale;
+        }
 
         private void StartFloating()
         {
@@ -119,34 +132,37 @@ namespace RPSLS.UI.Component
 
         public void OnGestureClick()
         {
-            RoundState roundState = ServiceLocator.GetRoundManager().RoundState;
-            OnGestureButtonClickEvent?.Invoke(m_Gesture.GestureType, roundState);
-            switch (roundState)
+            _onGestureButtonClickEvent?.Invoke(m_Gesture.GestureType);
+
+            if (_isTimerActive)
             {
-                case RoundState.Start:
-                    InGameController.Instance.GetPlayerSelf.MakeChoice(m_Gesture.GestureType);
-                    ToggleHighlight(true);
-                    break;
-                case RoundState.End:
-                    break;
-                case RoundState.Result:
-                    break;
-                case RoundState.Exit:
-                    break;
+                InGameController.Instance.GetPlayerSelf.MakeChoice(m_Gesture.GestureType);
+                ToggleHighlight(true);
+                UIManager.Instance.OnButtonClick();
             }
         }
 
-        private void OnOtherGestureSelected(GestureType other, RoundState roundStateDuringClick)
+        /// <summary>
+        /// Gets called when any of the 5 Gesture cards get clicked. 
+        /// </summary>
+        private void OnOtherGestureSelected(GestureType other)
         {
             if (other == m_Gesture.GestureType) return;
 
-            if (roundStateDuringClick == RoundState.Start)
+            if (_isTimerActive)
                 ToggleHighlight(false);
         }
 
         public void OnRoundStart()
         {
+            ResetPositionAndScale();
             ToggleHighlight(false);
+            _isTimerActive = true;
+        }
+
+        public void OnRoundEnd()
+        {
+            _isTimerActive = false;
         }
 
 #endregion

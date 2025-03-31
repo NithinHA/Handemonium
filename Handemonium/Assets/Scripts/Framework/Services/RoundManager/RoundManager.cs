@@ -23,7 +23,6 @@ namespace RPSLS.Framework.Services
         {
             RoundState prev = _roundState;
             _roundState = state;
-            Debug.Log($"RoundManager switched => {prev} -> {state}".ToNavy());
             _onRoundStateChanged?.Invoke(prev, _roundState);
         }
 

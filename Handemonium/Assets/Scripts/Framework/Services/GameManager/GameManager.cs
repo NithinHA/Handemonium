@@ -13,10 +13,12 @@ namespace RPSLS.Framework.Services
 
         public void Start()
         {
+            AddListener(OnGameStateChanged);
         }
 
         public void OnDestroy()
         {
+            RemoveListener(OnGameStateChanged);
         }
 
 #endregion
@@ -37,5 +39,15 @@ namespace RPSLS.Framework.Services
         {
             _onGameStateChanged -= listener;
         }
+
+#region Event listeners
+
+        private void OnGameStateChanged(GameState prevState, GameState curState)
+        {
+            if (prevState == GameState.Bootstrap)
+                AudioManager.Instance.PlaySound(Constants.Audio.BGM);
+        }
+
+#endregion
     }
 }

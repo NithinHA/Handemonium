@@ -73,7 +73,12 @@ namespace RPSLS.UI
         }
 
         private void OnRoundEnd()
-        { }
+        {
+            foreach (GestureCardButton gestureButton in m_GestureButtons)
+            {
+                gestureButton.OnRoundEnd();
+            }
+        }
 
         private void OnRoundResult()
         {

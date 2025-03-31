@@ -17,7 +17,7 @@ namespace RPSLS.Player
         public override void MakeChoice(GestureType gestureType = GestureType.None)
         {
             SelectedGesture = _strategy.ChooseGesture(InGameController.Instance.GameRules.AllGestures);
-            Debug.Log($"AI player choice made => {SelectedGesture}".ToBrown());
+            Debug.Log($"AI choice: [{SelectedGesture}]".ToOlive());
         }
 
         public override void OnRoundBegin()

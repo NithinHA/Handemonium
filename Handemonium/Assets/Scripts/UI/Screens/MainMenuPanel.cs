@@ -43,6 +43,7 @@ namespace RPSLS.UI
         public void OnClickPlay()
         {
             TogglePlayButtonInteraction(false);
+            UIManager.Instance.OnButtonClick();
             MainMenuController.Instance.OnPlayClicked();
         }
 
@@ -55,6 +56,7 @@ namespace RPSLS.UI
             _isMusicOn = !_isMusicOn;
             sound.Source.mute = !_isMusicOn;
             SetMusicButton();
+            UIManager.Instance.OnButtonClick();
         }
 
 #endregion

@@ -6,9 +6,9 @@ namespace RPSLS.UI
         public MainMenuPanel MainMenuPanel;
         public InGamePanel InGamePanel;
 
-        protected override void Start()
+        public void OnButtonClick()
         {
-            base.Start();
+            AudioManager.Instance.PlaySound(Constants.Audio.CLICK);
         }
     }
 }

@@ -256,6 +256,94 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &714986029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 714986031}
+  - component: {fileID: 714986030}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &714986030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714986029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 350fb1d08fb7c6b46928ede896643b8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DontDestroyOnLoad: 1
+  Sounds:
+  - Name: BGM
+    Clip: {fileID: 8300000, guid: 42affee2f84874d40995b3128941e981, type: 3}
+    Volume: 0.15
+    Pitch: 1
+    IsLooping: 1
+    Source: {fileID: 0}
+  - Name: Pick
+    Clip: {fileID: 8300000, guid: e8eb1f7d3a76d8a4080127de0b9bde04, type: 3}
+    Volume: 0.7
+    Pitch: 0.8
+    IsLooping: 0
+    Source: {fileID: 0}
+  - Name: Drop
+    Clip: {fileID: 8300000, guid: 2e30ea67cc55a964686f96e7eb4d99a2, type: 3}
+    Volume: 0.7
+    Pitch: 0.6
+    IsLooping: 0
+    Source: {fileID: 0}
+  - Name: Click
+    Clip: {fileID: 8300000, guid: 7c778325ba18b064aa531d23e1cc8679, type: 3}
+    Volume: 0.7
+    Pitch: 1
+    IsLooping: 0
+    Source: {fileID: 0}
+  - Name: Win
+    Clip: {fileID: 8300000, guid: b24d2317166707b4e8a9ea6700999803, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    IsLooping: 0
+    Source: {fileID: 0}
+  - Name: Lose
+    Clip: {fileID: 8300000, guid: 19d7442806aea2c4abb45d53af077248, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    IsLooping: 0
+    Source: {fileID: 0}
+  - Name: Draw
+    Clip: {fileID: 8300000, guid: c90cb75db2843a341ada97f5a37888f5, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    IsLooping: 0
+    Source: {fileID: 0}
+--- !u!4 &714986031
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714986029}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1314994303
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,3 +395,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 1314994305}
+  - {fileID: 714986031}
