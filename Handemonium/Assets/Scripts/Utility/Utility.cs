@@ -10,14 +10,14 @@ namespace RPSLS
 {
     public static class Utility
     {
-        public static void ImageFadeEffect(Image image, float startAmount = 0, float endAmount = 1, float duration = 1, Action onComplete = null)
+        public static void ImageFadeEffect(Image image, float startAmount = 0, float endAmount = 1, float duration = 1, Ease easeMode = Ease.Linear, Action onComplete = null)
         {
             Color color = image.color;
             color.a = startAmount;
             image.color = color;
 
             // Tween opacity from <startAmount> to <endAmount> in <duration> second
-            image.DOFade(endAmount, duration).OnComplete(() =>
+            image.DOFade(endAmount, duration).SetEase(easeMode).OnComplete(() =>
             {
                 onComplete?.Invoke();
             });

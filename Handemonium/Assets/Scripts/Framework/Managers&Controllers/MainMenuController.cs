@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AYellowpaper.SerializedCollections;
@@ -5,6 +6,7 @@ using RPSLS.Framework.Services;
 using RPSLS.Game;
 using RPSLS.UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace RPSLS.Framework
 {
@@ -25,6 +27,17 @@ namespace RPSLS.Framework
         {
             ServiceLocator.GetGameManager()?.RemoveListener(OnGameStateChanged);
             base.OnDestroy();
+        }
+
+        private void Update()
+        {
+            if (Keyboard.current?.escapeKey.wasPressedThisFrame == true)    // Device back button on Android.
+            {
+                if (ServiceLocator.GetGameManager().GameState != GameState.MainMenu)
+                    return;
+                
+                Application.Quit();
+            }
         }
 
 #endregion

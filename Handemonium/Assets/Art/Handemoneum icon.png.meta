@@ -129,12 +129,12 @@ TextureImporter:
       name: Handemoneum icon_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 23
-        width: 861
-        height: 854
+        x: 0
+        y: 0
+        width: 899
+        height: 900
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 84d2dcd19ad585f409b752ae2e0f35cb
     internalID: 0
     vertices: []
     indices: 
@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Handemoneum icon_0: 4164618994610758062
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

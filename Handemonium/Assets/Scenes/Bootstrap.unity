@@ -289,43 +289,43 @@ MonoBehaviour:
   Sounds:
   - Name: BGM
     Clip: {fileID: 8300000, guid: 42affee2f84874d40995b3128941e981, type: 3}
-    Volume: 0.15
+    Volume: 0.5
     Pitch: 1
     IsLooping: 1
     Source: {fileID: 0}
   - Name: Pick
     Clip: {fileID: 8300000, guid: e8eb1f7d3a76d8a4080127de0b9bde04, type: 3}
-    Volume: 0.7
+    Volume: 0.8
     Pitch: 0.8
     IsLooping: 0
     Source: {fileID: 0}
   - Name: Drop
     Clip: {fileID: 8300000, guid: 2e30ea67cc55a964686f96e7eb4d99a2, type: 3}
-    Volume: 0.7
+    Volume: 0.8
     Pitch: 0.6
     IsLooping: 0
     Source: {fileID: 0}
   - Name: Click
     Clip: {fileID: 8300000, guid: 7c778325ba18b064aa531d23e1cc8679, type: 3}
-    Volume: 0.7
+    Volume: 0.95
     Pitch: 1
     IsLooping: 0
     Source: {fileID: 0}
   - Name: Win
     Clip: {fileID: 8300000, guid: b24d2317166707b4e8a9ea6700999803, type: 3}
-    Volume: 0.5
+    Volume: 0.7
     Pitch: 1
     IsLooping: 0
     Source: {fileID: 0}
   - Name: Lose
     Clip: {fileID: 8300000, guid: 19d7442806aea2c4abb45d53af077248, type: 3}
-    Volume: 0.5
+    Volume: 0.7
     Pitch: 1
     IsLooping: 0
     Source: {fileID: 0}
   - Name: Draw
     Clip: {fileID: 8300000, guid: c90cb75db2843a341ada97f5a37888f5, type: 3}
-    Volume: 0.5
+    Volume: 0.7
     Pitch: 1
     IsLooping: 0
     Source: {fileID: 0}

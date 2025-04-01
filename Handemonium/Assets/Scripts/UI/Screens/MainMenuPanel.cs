@@ -1,3 +1,4 @@
+using DG.Tweening;
 using RPSLS.Framework;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,8 @@ namespace RPSLS.UI
     public class MainMenuPanel : BaseUIPanel
     {
         [SerializeField] private Image m_PlayButtonImage;
+        [SerializeField] private float m_PlayButtonAlphaDuration = .5f;
+        [Space]
         [SerializeField] private TextMeshProUGUI m_HighscoreText;
         [Header("Music button")]
         [SerializeField] private Image m_MusicImage;
@@ -35,7 +38,8 @@ namespace RPSLS.UI
 
         public void DelayedEnablePlayButton()
         {
-            Utility.ImageFadeEffect(m_PlayButtonImage, onComplete: () => TogglePlayButtonInteraction(true));
+            Utility.ImageFadeEffect(m_PlayButtonImage, duration: m_PlayButtonAlphaDuration, easeMode: Ease.InSine,
+                onComplete: () => TogglePlayButtonInteraction(true));
         }
 
 #region On click callbacks
