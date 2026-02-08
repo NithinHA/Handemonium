@@ -811,13 +811,13 @@ PlayerSettings:
   qnxGraphicConfPath: 
   apiCompatibilityLevel: 6
   captureStartupLogs: {}
-  activeInputHandler: 1
+  activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 6d99aa91-c4ac-4986-8536-c5a8cdd9c821
+  cloudProjectId: 27b8ca38-480f-48ab-aa8e-c801a8c98129
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: AdvanceRockPaperScissor
-  organizationId: elfen_11
+  projectName: Trial_4
+  organizationId: nit_zy
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

@@ -11,6 +11,8 @@ namespace RPSLS.UI
         [SerializeField] private Image m_PlayButtonImage;
         [SerializeField] private float m_PlayButtonAlphaDuration = .5f;
         [Space]
+        [SerializeField] private GameObject m_LobbyContainer;
+        [Space]
         [SerializeField] private TextMeshProUGUI m_HighscoreText;
         [Header("Music button")]
         [SerializeField] private Image m_MusicImage;
@@ -34,6 +36,7 @@ namespace RPSLS.UI
         {
             base.Hide();
             TogglePlayButtonInteraction(false);
+            m_LobbyContainer.SetActive(false);
         }
 
         public void DelayedEnablePlayButton()
@@ -61,6 +64,16 @@ namespace RPSLS.UI
             sound.Source.mute = !_isMusicOn;
             SetMusicButton();
             UIManager.Instance.OnButtonClick();
+        }
+
+        public void OnClickMultiplayer()
+        {
+            m_LobbyContainer.SetActive(true);
+        }
+
+        public void OnClickCloseLobby()
+        {
+            m_LobbyContainer.SetActive(false);
         }
 
 #endregion

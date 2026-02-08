@@ -11,6 +11,7 @@ namespace RPSLS.UI.Component
         [SerializeField] private Image m_FillImage;
         
         private InGameController _inGameController = null;
+        private Tween _activeTween;
 
         private void Start()
         {
@@ -29,7 +30,7 @@ namespace RPSLS.UI.Component
                 _inGameController = InGameController.Instance;
 
             float duration = _inGameController.DecisionTimerInSeconds;
-            m_FillImage.DOFillAmount(0f, duration).SetEase(Ease.OutSine).OnComplete(() =>
+            _activeTween = m_FillImage.DOFillAmount(0f, duration).SetEase(Ease.OutSine).OnComplete(() =>
             {
                 _inGameController.OnTimerComplete();
             });
@@ -38,6 +39,8 @@ namespace RPSLS.UI.Component
         public void Reset()
         {
             m_FillImage.fillAmount = 1f;
+            if (_activeTween.IsActive())
+                _activeTween.Kill();
         }
     }
 }

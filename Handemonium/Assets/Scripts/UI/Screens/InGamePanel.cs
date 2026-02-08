@@ -43,6 +43,8 @@ namespace RPSLS.UI
             base.Hide();
             m_ProgressBar.Reset();
             m_ScoreDisplayText.text = "0";
+            m_BeginRoundButton.SetActive(false);
+            m_PostRoundEndContinueButton.Reset();
         }
 
 #region Event listeners
@@ -97,6 +99,11 @@ namespace RPSLS.UI
         {
             m_BeginRoundButton.SetActive(false);
             InGameController.Instance.ClickBeginRound();
+        }
+
+        public void OnClickBack()
+        {
+            InGameController.Instance.OnBackButtonClick();
         }
 
 #endregion

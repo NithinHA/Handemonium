@@ -12,6 +12,9 @@ namespace RPSLS.Player
         public BasePlayer PlayerSelf;
         public BasePlayer PlayerOpponent;
 
+        [SerializeField] private BasePlayer AIOpponent;
+        [SerializeField] private BasePlayer RemoteOpponent;
+
 #region Unity callbacks
 
         private void Start()
@@ -25,13 +28,44 @@ namespace RPSLS.Player
         }
 
 #endregion
-        
-        public void Setup() { }
 
-        public void Reset()
+        public void Setup(string gameMode)
         {
-            PlayerSelf.ResetStats();
-            PlayerOpponent.ResetStats();
+            PlayerOpponent = gameMode switch
+            {
+                // In multiplayer, players might be registered before Setup is called
+                Constants.EventConstants.GAME_MODE_SINGLEPLAYER => AIOpponent,
+                Constants.EventConstants.GAME_MODE_MULTIPLAYER => RemoteOpponent,
+                _ => PlayerOpponent
+            };
+        }
+
+        public void RegisterLocalPlayer(BasePlayer player)
+        {
+            PlayerSelf = player;
+        }
+
+        public void RegisterRemotePlayer(BasePlayer player)
+        {
+            PlayerOpponent = player;
+        }
+
+        /// <summary>
+        /// Call this to switch from AI opponent to Remote opponent for multiplayer
+        /// </summary>
+        public void EnableMultiplayerMode(RemotePlayer remotePlayer)
+        {
+            PlayerOpponent = remotePlayer;
+            Debug.Log("PlayerRegistry: Switched to Multiplayer mode (RemotePlayer)");
+        }
+
+        public void Reset(bool resetGameMode)
+        {
+            if (PlayerSelf != null) PlayerSelf.ResetStats();
+            if (PlayerOpponent != null) PlayerOpponent.ResetStats();
+
+            if (resetGameMode)
+                PlayerOpponent = null;
         }
         
         private async Task ShowPlayerHands()
@@ -96,6 +130,12 @@ namespace RPSLS.Player
 
         private void OnRoundEnd(RoundState prevState, RoundState curState)
         {
+            //  if (Unity.Netcode.NetworkManager.Singleton != null && 
+            //     (Unity.Netcode.NetworkManager.Singleton.IsClient || Unity.Netcode.NetworkManager.Singleton.IsServer))
+            // {
+            //     return;
+            // }
+
             Task task = ShowPlayerHands();
         }
 

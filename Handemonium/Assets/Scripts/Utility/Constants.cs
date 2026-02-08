@@ -9,6 +9,13 @@ namespace RPSLS
             public const string SORTING_ORDER_BG = "Bg";
         }
 
+        public static class EventConstants
+        {
+            public const string GAME_MODE = "GameMode";
+            public const string GAME_MODE_SINGLEPLAYER = "GameModeSinglePlayer";
+            public const string GAME_MODE_MULTIPLAYER =  "GameModeMultiPlayer";
+        }
+
         public static class Audio
         {
             public const string BGM = "BGM";

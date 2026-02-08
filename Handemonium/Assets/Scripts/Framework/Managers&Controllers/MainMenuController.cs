@@ -76,7 +76,7 @@ namespace RPSLS.Framework
 
 #region Event listeners
         
-        private void OnGameStateChanged(GameState prevState, GameState curState)
+        private void OnGameStateChanged(GameState prevState, GameState curState, Dictionary<object, object> payload = null)
         {
             if (prevState == GameState.MainMenu && curState != GameState.MainMenu)
             {
@@ -92,8 +92,12 @@ namespace RPSLS.Framework
         {
             // Animate-out hands
             await HideAllHands();
-            // Perform screenTransition-> Animate-in-> invoke SwitchState(InGame)-> Animate-out 
-            ServiceLocator.GetGameManager().SwitchState(GameState.InGame);
+            // Perform screenTransition-> Animate-in-> invoke SwitchState(InGame)-> Animate-out
+            Dictionary<object, object> payload = new Dictionary<object, object>()
+            {
+                {Constants.EventConstants.GAME_MODE, Constants.EventConstants.GAME_MODE_SINGLEPLAYER}
+            };
+            ServiceLocator.GetGameManager().SwitchState(GameState.InGame, payload);
         }
 
 #endregion

@@ -31,6 +31,8 @@ namespace RPSLS.Framework
                 { typeof(IHighscore), new HighscoreService() },
                 { typeof(ISceneService), new SceneService() },
                 { typeof(IRoundService), new RoundManager() },
+                { typeof(StatsManager), new StatsManager() },
+
             };
 
             foreach (KeyValuePair<Type, IService> item in map)

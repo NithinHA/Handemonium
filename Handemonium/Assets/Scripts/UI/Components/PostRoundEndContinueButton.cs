@@ -30,11 +30,16 @@ namespace RPSLS.UI.Component
                 attackName.ToOrange();
             m_ResultDesc.text = $"{result.Winner.GestureType}\n{attackName}\n{result.Loser.GestureType}";
         }
-        
-        public void OnClickContinue()
+
+        public void Reset()
         {
             gameObject.SetActive(false);
+        }
+
+        public void OnClickContinue()
+        {
             InGameController.Instance.OnPostRoundEndContinue();
+            Reset();
         }
     }
 }

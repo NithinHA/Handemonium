@@ -78,6 +78,13 @@ namespace RPSLS.Framework
             return HasService(typeof(IHighscore)) ? GetService<IHighscore>() : null;
         }
 
+        public static StatsManager GetStatsManager()
+        {
+            return HasService(typeof(StatsManager)) ? GetService<StatsManager>() : null;
+        }
+
+
+
 #endregion
     }
 }

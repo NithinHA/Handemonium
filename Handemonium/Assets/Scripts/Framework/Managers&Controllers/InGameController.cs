@@ -25,6 +25,13 @@ namespace RPSLS.Framework
         private readonly List<RoundResultDesc> _roundResults = new List<RoundResultDesc>();
         public RoundResultDesc CurrentRoundResult { get; private set; }
 
+        public void SetRoundResult(RoundResultDesc result)
+        {
+            CurrentRoundResult = result;
+            _roundResults.Add(CurrentRoundResult);
+            ServiceLocator.GetRoundManager().SwitchState(RoundState.Result);
+        }
+
 #endregion
         
 #region Current score
@@ -55,12 +62,19 @@ namespace RPSLS.Framework
 
 #endregion
 
-        public void Setup()
+        public void Setup(Dictionary<object, object> payload)
         {
             m_Environment.SetActive(true);
             _scoreHandler.ResetScore();
             UIManager.Instance.InGamePanel.Show();
-            m_PlayerRegistry.Setup();
+            
+            // If Local (not networked) or Host, we might do setup
+            // Usually PlayerRegistry.Setup() is empty anyway
+            if (payload != null && payload.TryGetValue(Constants.EventConstants.GAME_MODE, out var gameMode))
+                m_PlayerRegistry.Setup(gameMode as string);
+
+            // If Networking, maybe auto-start round or wait for server?
+            // For now, let the standard flow happen.
         }
 
         public void Reset()
@@ -68,13 +82,26 @@ namespace RPSLS.Framework
             m_Environment.SetActive(false);
             _scoreHandler.ResetScore();
             UIManager.Instance.InGamePanel.Hide();
-            m_PlayerRegistry.Reset();
+            m_PlayerRegistry.Reset(true);
             _roundResults.Clear();
         }
 
         public void ClickBeginRound()
         {
-            ServiceLocator.GetRoundManager().SwitchState(RoundState.Start);     // will start the round timer.
+            // If in multiplayer, signal ready to server
+            if (Unity.Netcode.NetworkManager.Singleton != null && 
+                Unity.Netcode.NetworkManager.Singleton.IsListening)
+            {
+                var controller = RPSLS.Framework.Controllers.NetworkGameController.Instance;
+                if (controller != null)
+                {
+                    controller.SetPlayerReadyServerRpc();
+                    return; // Server will start round when both ready
+                }
+            }
+            
+            // Local game flow
+            ServiceLocator.GetRoundManager().SwitchState(RoundState.Start);
         }
 
         public void OnTimerComplete()
@@ -89,10 +116,43 @@ namespace RPSLS.Framework
             ServiceLocator.GetRoundManager().SwitchState(RoundState.Result);
         }
 
-        public async void OnPostRoundEndContinue()
+        public void OnPostRoundEndContinue()
+        {
+            // In multiplayer, signal ready to server and wait for both players
+            if (Unity.Netcode.NetworkManager.Singleton != null && 
+                Unity.Netcode.NetworkManager.Singleton.IsListening)
+            {
+                var controller = RPSLS.Framework.Controllers.NetworkGameController.Instance;
+                if (controller != null)
+                {
+                    controller.SetPlayerContinueReadyServerRpc();
+                    return; // Server will call ContinueToNextRoundClientRpc when both ready
+                }
+            }
+
+            // Single-player: execute immediately
+            ContinueToNextRoundLocal();
+        }
+
+        /// <summary>
+        /// Called by NetworkGameController when both players are ready to continue (multiplayer only)
+        /// </summary>
+        public async void ContinueToNextRoundMultiplayer()
         {
             await m_PlayerRegistry.HidePlayerHands();
-            m_PlayerRegistry.Reset();
+            m_PlayerRegistry.Reset(false);
+            
+            // In multiplayer, always continue to next round (no Win/Lose branching)
+            ServiceLocator.GetRoundManager().SwitchState(RoundState.Start);
+        }
+
+        /// <summary>
+        /// Single-player continuation with Win/Lose logic
+        /// </summary>
+        public async void ContinueToNextRoundLocal()
+        {
+            await m_PlayerRegistry.HidePlayerHands();
+            m_PlayerRegistry.Reset(false);
 
             switch (CurrentRoundResult.Result)
             {
@@ -113,9 +173,33 @@ namespace RPSLS.Framework
             }
         }
 
+        public async void ExitOnBackClick()
+        {
+            var roundState = ServiceLocator.GetRoundManager().RoundState;
+            if (roundState == RoundState.Result || roundState == RoundState.End)
+            {
+                // If hands are showing, hide them first
+                await m_PlayerRegistry.HidePlayerHands();
+            }
+
+            // Reset game state
+            Reset();
+            ServiceLocator.GetRoundManager().SwitchState(RoundState.Idle);
+            
+            // Disconnect from multiplayer if connected
+            if (Unity.Netcode.NetworkManager.Singleton != null && 
+                Unity.Netcode.NetworkManager.Singleton.IsListening)
+            {
+                Unity.Netcode.NetworkManager.Singleton.Shutdown();
+            }
+
+            // Return to main menu
+            ServiceLocator.GetGameManager().SwitchState(GameState.MainMenu);
+        }
+
 #region Event listeners
 
-        private void OnGameStateChanged(GameState prevState, GameState curState)
+        private void OnGameStateChanged(GameState prevState, GameState curState, Dictionary<object, object> payload = null)
         {
             if (prevState == GameState.InGame && curState != GameState.InGame)
             {
@@ -123,7 +207,7 @@ namespace RPSLS.Framework
             }
             else if (curState == GameState.InGame)
             {
-                Setup();
+                Setup(payload);
             }
         }
         
@@ -151,6 +235,28 @@ namespace RPSLS.Framework
                             break;
                     }
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Called when the back button is clicked in the in-game panel
+        /// </summary>
+        public void OnBackButtonClick()
+        {
+            // In multiplayer, notify server and other clients about disconnect
+            if (Unity.Netcode.NetworkManager.Singleton != null && 
+                Unity.Netcode.NetworkManager.Singleton.IsListening)
+            {
+                var controller = RPSLS.Framework.Controllers.NetworkGameController.Instance;
+                if (controller != null)
+                {
+                    // Notify other clients that this player is leaving
+                    controller.NotifyPlayerLeavingServerRpc();
+                }
+            }
+            else
+            {
+                ExitOnBackClick();
             }
         }
 
